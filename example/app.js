@@ -1,4 +1,5 @@
 'use strict'
+const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -12,6 +13,9 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(awsServerlessExpressMiddleware.eventContext())
+
+// NOTE: tests can't find the views directory without this
+app.set('views', path.join(__dirname, 'views'))
 
 app.get('/', (req, res) => {
   res.render('index', {
